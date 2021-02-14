@@ -110,7 +110,7 @@ app.use(routerCorrect())
 app.use(static(
     path.join( __dirname,  './static'),
     {
-      maxage: 2592000000
+      maxage: 3600000
     }
 ))
 // 静态文件没有找到
@@ -129,7 +129,7 @@ app.use(async (ctx, next) => {
 app.use(static(
     path.join( __dirname,  './static'),
     {
-      maxage: 2592000000
+      maxage: 3600000
     }
 ))
 
