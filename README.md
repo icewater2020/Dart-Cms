@@ -1,19 +1,15 @@
 # 这是一套nodejs+mongodb实现的电影网站管理系统
 > 技术栈 vue + vue-router + nodejs + koa2 + mongodb + nginx
+> 整个系统需要环境 nginx（分发请求给nodejs，http2，ssl），nodejs（数据处理），mongodb（数据存储)
 
 
 ## 其他开源项目
 
-[Dart-Cms-Manage](https://github.com/abcd498936590/Dart-Cms-Manage) Dart-Cms后台管理系统页面部分
+* [Dart-Cms-Manage](https://github.com/abcd498936590/Dart-Cms-Manage) Dart-Cms后台管理系统页面部分
+* [Dart-Cms-Flutter](https://github.com/abcd498936590/Dart-Cms-Flutter) Dart-Cms的安卓客户端，使用flutter开发
+* [Dart-CMS-Script](https://github.com/abcd498936590/Dart-Cms-Script) Dart-Cms插件教程，插件使用，插件开发
+* [flutter fijkplayer](https://github.com/abcd498936590/fijkplayer_skin) Flutter fijkplayer的一款皮肤
 
-[Dart-Cms-Flutter](https://github.com/abcd498936590/Dart-Cms-Flutter) Dart-Cms的安卓客户端，使用flutter开发
-
-[Dart-CMS-Script](https://github.com/abcd498936590/Dart-Cms-Script) Dart-Cms插件教程，插件使用，插件开发
-
-[flutter fijkplayer](https://github.com/abcd498936590/fijkplayer_skin) Flutter fijkplayer的一款皮肤
-
-
-> 整个系统需要环境 nginx（分发请求给nodejs，http2，ssl），nodejs（数据处理），mongodb（数据存储)
 
 ## 免责申明
 > 本项目仅供学习参考，请勿用于任何商业、非法用途。由此带来的法律责任，本人概不承担！
