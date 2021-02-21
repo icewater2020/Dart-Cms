@@ -1,6 +1,15 @@
 # 这是一套nodejs+mongodb实现的电影网站管理系统
 > 技术栈 vue + vue-router + nodejs + koa2 + mongodb + nginx
 
+
+## 其他开源项目
+
+[Dart-Cms-Manage)](https://github.com/abcd498936590/Dart-Cms-Manage) Dart-Cms后台管理系统页面部分
+[Dart-Cms-Flutter](https://github.com/abcd498936590/Dart-Cms-Flutter) Dart-Cms的安卓客户端，使用flutter开发
+[Dart-CMS-Script](https://github.com/abcd498936590/Dart-Cms-Script) Dart-Cms插件教程，插件使用，插件开发
+[flutter fijkplayer](https://github.com/abcd498936590/fijkplayer_skin) Flutter fijkplayer的一款皮肤
+
+
 > 整个系统需要环境 nginx（分发请求给nodejs，http2，ssl），nodejs（数据处理），mongodb（数据存储)
 
 ## 免责申明
@@ -25,26 +34,6 @@
     <img width="380" src="https://cdn.jsdelivr.net/gh/abcd498936590/pic@master/img/dart-cms-flutter-4.png" />
     <img src="https://cdn.jsdelivr.net/gh/abcd498936590/pic@master/img/fijkplayer_skin-1.png" />
 </p>
-
-## Dart-Cms-Manage（后台）
-
-[后台管理系统部分(使用vue全家桶)](https://github.com/abcd498936590/Dart-Cms-Manage)
-
-## Dart-Cms-Flutter（安卓）
-
-[安卓APP使用google flutter技术开发](https://github.com/abcd498936590/Dart-Cms-Flutter)
-
-## fijkplayer_skin（fijkplayer皮肤）
-
-[flutter fijkplayer 的一款皮肤](https://github.com/abcd498936590/fijkplayer_skin)
-
-## Dart-Cms-Script（插件）
-
-[Dart-CMS采集插件](https://github.com/abcd498936590/Dart-Cms-Script)
-
-## vue + php 半天时间搞个音乐项目
-
-[半天vue音乐爬虫项目](https://github.com/abcd498936590/spider-music)
 
 
 ## 插件
