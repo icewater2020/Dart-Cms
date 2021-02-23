@@ -13,18 +13,23 @@
             "type":"boolean",
             "val":true
         },
-        "nav":{
-            "key":"静态导航",
+        "video-type":{
+            "key":"视频导航",
             "type":"boolean",
             "val":true
         },
         "detill":{
-            "key":"静态详情",
+            "key":"视频详情",
             "type":"boolean",
             "val":false
         },
         "play":{
-            "key":"静态播放",
+            "key":"视频播放",
+            "type":"boolean",
+            "val":false
+        },
+        "article":{
+            "key":"文章详情",
             "type":"boolean",
             "val":false
         },
@@ -37,7 +42,7 @@
         "lens":{
             "key":"实例长度",
             "type":"number",
-            "val":30,
+            "val":50,
             "note":"请输入每个分类下生成的视频静态页面个数"
         }
     }

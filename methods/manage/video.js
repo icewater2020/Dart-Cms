@@ -4,11 +4,11 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const unzip = require("unzip-stream");
 const uuidv4 = require('uuid/v4');
-require('shelljs/global');
 //
 const getDB = require('../../utils/baseConnect');
 const authToken = require('../../utils/authToken');
-const { setResponse, makeArrObjectID, mixinsScriptConfig, encryption, createTokenID, getBjDate, dirCatImgs, placeUploadImg } = require('../../utils/tools');
+const { setResponse, makeArrObjectID, mixinsScriptConfig, encryption, createTokenID, getBjDate, dirCatImgs, placeUploadImg, httpRequest } = require('../../utils/tools');
+
 
 
 
@@ -324,7 +324,7 @@ let AddScource = async (ctx, next) => {
 			success: '视频播放源添加成功'
 		})
 
-	}, {admin: true}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
+	}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
 
 }
 // 修改视频的源信息
@@ -346,7 +346,7 @@ let UpdateScource = async (ctx, next) => {
 			success: '视频播放源修改成功'
 		})
 
-	}, {admin: true}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
+	}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
 
 }
 // 给视频源排序
@@ -369,7 +369,7 @@ let ScourceSort = async (ctx, next) => {
 			success: '视频播放源修改成功'
 		})
 
-	}, {admin: true}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
+	}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
 
 }
 // 给视频删除源
@@ -387,7 +387,7 @@ let RemoveScource = async (ctx, next) => {
 			success: '视频播放源删除成功'
 		})
 
-	}, {admin: true}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
+	}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
 
 }
 // 遍历所有的封面
@@ -436,7 +436,7 @@ let UploadImages = async (ctx, next) => {
 			success: "图片上传成功"
 		});
 
-	}, {admin: true}, {admin: true}, {insRole: true, childrenKey: ['addVideo', 'updateVideo'], parentKey: 'video'})
+	}, {admin: true}, {insRole: true, childrenKey: ['addVideo', 'updateVideo'], parentKey: 'video'})
 
 }
 // 删除 封面 海报 图片
@@ -453,7 +453,84 @@ let RemoveImages = async (ctx, next) => {
 			success: "图片删除成功"
 		});
 
-	}, {admin: true}, {admin: true}, {insRole: true, childrenKey: ['addVideo', 'updateVideo'], parentKey: 'video'})
+	}, {admin: true}, {insRole: true, childrenKey: ['addVideo', 'updateVideo'], parentKey: 'video'})
+
+}
+// 生成静态文件
+let CreateStatic = async (ctx, next) => {
+
+	await authToken(ctx, next, async () => {
+
+		let { _id, detill = false, player = false, remoteUrl } = ctx.request.body;
+		let promise = {
+			detill: false,
+			player: false
+		}
+		let info = {
+			success: '',
+			error: ''
+		}
+		// 生成详情页
+		if(detill){
+			try{
+				let url = `${remoteUrl}/detill/${_id}.html`;
+				let httpResult = await httpRequest(url);
+				if(httpResult && httpResult.status === 200){
+						// 路径生成
+						let curPlayFilePath = path.resolve(__dirname, `../../static/cache/detill/${_id}.html`);
+						let detillFolderPath = path.resolve(__dirname, '../../static/cache/detill/');
+						// 先查询detill文件夹是否存在
+						let detillFolderExist = fs.existsSync(detillFolderPath);
+						if(!detillFolderExist){
+				   			fse.mkdirSync(detillFolderPath);
+				   		}
+						// 匹配替换
+				   		fse.writeFileSync(curPlayFilePath, httpResult.data.replace(/http:\/\/localhost:9999/gi, remoteUrl));
+				   		// 成功
+						info.success += '详情页生成成功，'
+
+				}else{
+					info.error += '详情页生成失败，'
+				}
+			}catch(err){
+				console.log(err);
+			}
+		}
+		// 生成播放页
+		if(player){
+			try{
+				let url = `${remoteUrl}/play/${_id}.html`;
+				let httpResult = await httpRequest(url);
+				if(httpResult && httpResult.status === 200){
+					// 路径生成
+					let curPlayFilePath = path.resolve(__dirname, `../../static/cache/play/${_id}.html`);
+					let playFolderPath = path.resolve(__dirname, '../../static/cache/play/');
+					// 先查询play文件夹是否存在
+					let playFolderExist = fs.existsSync(playFolderPath);
+					if(!playFolderExist){
+			   			fse.mkdirSync(playFolderPath);
+			   		}
+					// 匹配替换
+			   		fse.writeFileSync(curPlayFilePath, httpResult.data.replace(/http:\/\/localhost:9999/gi, remoteUrl));
+			   		// 成功
+					info.success += '播放页生成成功，'
+
+				}else{
+					info.error += '播放页生成失败，'
+				}
+			}catch(err){
+				console.log(err);
+			}
+		}
+
+		var successLen = info.success.length - 1;
+		info.success = info.success.charAt(successLen) === '，' ? info.success.substring(0, successLen) : info.success;
+		var errorLen = info.error.length - 1;
+		info.error = info.error.charAt(errorLen) === '，' ? info.error.substring(0, errorLen) : info.error;
+
+		await setResponse(ctx, Promise.resolve(), info);
+
+	}, {admin: true}, {insRole: true, childrenKey: 'updateVideo', parentKey: 'video'})
 
 }
 
@@ -474,4 +551,5 @@ module.exports = {
 	VideosRemove,
 	GetCurVideoInfo,
 	GetVideoList,
+	CreateStatic,
 }

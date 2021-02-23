@@ -11,6 +11,8 @@ const authToken = require('../../utils/authToken');
 const { setResponse, makeArrObjectID, mixinsScriptConfig, encryption, createTokenID, getBjDate } = require('../../utils/tools');
 
 
+
+
 // 获取配置
 let GetConfig = async (ctx, next) => {
 

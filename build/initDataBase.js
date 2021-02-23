@@ -577,45 +577,6 @@ client.then(async (db) => {
                     },
                     type: 'nav_type',
                     index: 4
-                },
-                {
-                    name: '大陆动漫',
-                    parent_id: pid,
-                    display: true,
-                    nav_type: 'video',
-                    seo: {
-                        title: '免费在线观看,动漫',
-                        keywords: '大陆动漫',
-                        description: '大陆动漫'
-                    },
-                    type: 'nav_type',
-                    index: 5
-                },
-                {
-                    name: '日本动漫',
-                    parent_id: pid,
-                    display: true,
-                    nav_type: 'video',
-                    seo: {
-                        title: '免费在线观看,动漫',
-                        keywords: '日本动漫',
-                        description: '日本动漫'
-                    },
-                    type: 'nav_type',
-                    index: 6
-                },
-                {
-                    name: '美国动漫',
-                    parent_id: pid,
-                    display: true,
-                    nav_type: 'video',
-                    seo: {
-                        title: '免费在线观看,动漫',
-                        keywords: '美国动漫',
-                        description: '美国动漫'
-                    },
-                    type: 'nav_type',
-                    index: 7
                 }
             ]);
         });

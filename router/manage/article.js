@@ -9,6 +9,7 @@ let {
 	UpdateArticle,
 	RemoveArticle,
 	GetCurArticle,
+	CreateStatic,
 } = require('../../methods/manage/article')
 
 
@@ -24,6 +25,8 @@ route.post('/article/updateArticle', UpdateArticle);
 route.post('/article/changeArtState', ChangeArtState);
 // 获取当个文章信息
 route.post('/article/getCurArticle', GetCurArticle);
+// 生成静态文件
+route.post('/article/createStaticFile', CreateStatic);
 
 
 module.exports = route

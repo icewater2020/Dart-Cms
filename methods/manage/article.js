@@ -8,7 +8,7 @@ require('shelljs/global');
 //
 const getDB = require('../../utils/baseConnect');
 const authToken = require('../../utils/authToken');
-const { setResponse, makeArrObjectID, mixinsScriptConfig, encryption, createTokenID, getBjDate, dirCatImgs, placeUploadImg } = require('../../utils/tools');
+const { setResponse, makeArrObjectID, mixinsScriptConfig, encryption, createTokenID, getBjDate, dirCatImgs, placeUploadImg, httpRequest } = require('../../utils/tools');
 
 
 // 获取文章列表
@@ -213,6 +213,45 @@ let RemoveArticle = async (ctx, next) => {
 	}, {admin: true}, {insRole: true, childrenKey: 'removeArticle', parentKey: 'article'})
 
 }
+// 生成静态文件
+let CreateStatic = async (ctx, next) => {
+
+	await authToken(ctx, next, async () => {
+
+		let { _id, remoteUrl } = ctx.request.body;
+		let promise;
+
+		let url = `${remoteUrl}/article/${_id}.html`;
+		let httpResult = await httpRequest(url);
+
+		if(httpResult && httpResult.status === 200){
+			try{
+				// 路径生成
+				let curArticleFilePath = path.resolve(__dirname, `../../static/cache/article/${_id}.html`);
+				let articleFolderPath = path.resolve(__dirname, '../../static/cache/article/');
+				// 先查询play文件夹是否存在
+				let articleFolderExist = fs.existsSync(articleFolderPath);
+				if(!articleFolderExist){
+		   			fse.mkdirSync(articleFolderPath);
+		   		}
+				// 匹配替换
+		   		fse.writeFileSync(curArticleFilePath, httpResult.data.replace(/http:\/\/localhost:9999/gi, remoteUrl));
+				promise = Promise.resolve();
+			}catch(err){
+				console.log(err);
+			}
+		}else{
+			promise = Promise.reject();
+		}
+
+		await setResponse(ctx, promise, {
+			error: '静态文件创建失败',
+			success: '静态文件创建成功'
+		})
+
+	}, {admin: true}, {insRole: true, childrenKey: 'updateArticle', parentKey: 'article'})
+
+}
 
 module.exports = {
 	GetAllArticle,
@@ -221,4 +260,5 @@ module.exports = {
 	UpdateArticle,
 	RemoveArticle,
 	GetCurArticle,
+	CreateStatic,
 }

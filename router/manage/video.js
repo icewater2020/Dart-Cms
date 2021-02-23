@@ -18,6 +18,7 @@ let {
 	DirPosterImgs,
 	UploadImages,
 	RemoveImages,
+	CreateStatic
 } = require('../../methods/manage/video')
 
 // 视频列表   page, total, size, search
@@ -55,6 +56,8 @@ route.post('/video/uploadImages', body({
 }), UploadImages);
 // 删除 封面 海报
 route.post('/video/removeImages', RemoveImages);
+// 生成静态文件
+route.post('/video/createVideoStatic', CreateStatic);
 
 
 module.exports = route

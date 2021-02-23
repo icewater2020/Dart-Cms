@@ -75,10 +75,10 @@ let mainFn = async (DB) => {
 	   	mixinsScriptConfig(scriptAlias, {state: true, pid: process.pid, runTime: dateStringify(isBJtime)});
 
 		// 首页
-		if(Sconfig.options.home.val){
+		if(Sconfig.options["home"].val){
 		   	await new Promise(async (res, rej) => {
 		   		let indexRes = await http(`${domain}/index.html`);
-			   	if(indexRes.status === 200){
+			   	if(indexRes){
 			   		let indexFilePath = path.resolve(cachePath, './index.html');
 			   		fse.writeFileSync(indexFilePath, indexRes.data.replace(/http:\/\/localhost:9999/gi, domain));
 			   	}
@@ -87,13 +87,13 @@ let mainFn = async (DB) => {
 		   		console.log('首页文件生成发生错误');
 		   	});
 		}
-	   	// 分类
-	   	if(Sconfig.options.nav.val){
+	   	// 所有的视频分类
+	   	if(Sconfig.options["video-type"].val){
 		   	await new Promise(async (res, rej) => {
-		   		let allTopNavList = await otherColl.find({type: 'nav_type', parent_id: false, display: true}).toArray();
+		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'video', parent_id: false, display: true}).toArray();
 		   		for(let arg of allTopNavList){
 			   		let curNavRes = await http(`${domain}/video-type/${arg._id}.html`);
-				   	if(curNavRes.status === 200){
+				   	if(curNavRes){
 				   		let navCatPath = path.resolve(cachePath, './video-type');
 				   		let navCatExist = fse.existsSync(navCatPath);
 				   		if(!navCatExist){
@@ -109,16 +109,16 @@ let mainFn = async (DB) => {
 		   		console.log('分类文件生成发生错误');
 		   	});
 	   	}
-	   	// 所有的详情页
-	   	if(Sconfig.options.detill.val){
+	   	// 所有的视频详情页
+	   	if(Sconfig.options["detill"].val){
 		   	await new Promise(async (res, rej) => {
 		   		let lens = Sconfig.options.lens.val;
-		   		let allTopNavList = await otherColl.find({type: 'nav_type', display: true}).toArray();
+		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'video', display: true}).toArray();
 		   		for(let arg of allTopNavList){
 		   			let allVideoList = await videoInfoColl.find({display: true, video_type: arg._id}).sort({rel_time: -1, video_rate: -1, update_time: -1}).limit(lens).toArray();
 			   		for(let arg2 of allVideoList){
 				   		let curDetillVideoRes = await http(`${domain}/detill/${arg2._id}.html`);
-					   	if(curDetillVideoRes.status === 200){
+					   	if(curDetillVideoRes){
 					   		let detillCatPath = path.resolve(cachePath, './detill');
 					   		let detillCatExist = fse.existsSync(detillCatPath);
 					   		if(!detillCatExist){
@@ -135,16 +135,16 @@ let mainFn = async (DB) => {
 		   		console.log('详情文件生成发生错误');
 		   	});
 	   	}
-	   	// 所有的播放页
-	   	if(Sconfig.options.play.val){
+	   	// 所有的视频播放页
+	   	if(Sconfig.options["play"].val){
 		   	await new Promise(async (res, rej) => {
 		   		let lens = Sconfig.options.lens.val;
-		   		let allTopNavList = await otherColl.find({type: 'nav_type', display: true}).toArray();
+		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'video', display: true}).toArray();
 		   		for(let arg of allTopNavList){
 			   		let allVideoList = await videoInfoColl.find({display: true, video_type: arg._id}).sort({rel_time: -1, video_rate: -1, update_time: -1}).limit(lens).toArray();
 			   		for(let arg2 of allVideoList){
 				   		let curPlayVideoRes = await http(`${domain}/play/${arg2._id}.html`);
-					   	if(curPlayVideoRes.status === 200){
+					   	if(curPlayVideoRes){
 					   		let playCatPath = path.resolve(cachePath, './play');
 					   		let playCatExist = fse.existsSync(playCatPath);
 					   		if(!playCatExist){
@@ -159,6 +159,28 @@ let mainFn = async (DB) => {
 		   		res();
 		   	}).catch((err) => {
 		   		console.log('播放文件生成发生错误');
+		   	});
+	   	}
+	   	// 所有的文章内容
+	   	if(Sconfig.options["article"].val){
+		   	await new Promise(async (res, rej) => {
+		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'article', parent_id: false, display: true}).toArray();
+		   		for(let arg of allTopNavList){
+			   		let curNavRes = await http(`${domain}/article/${arg._id}.html`);
+				   	if(curNavRes){
+				   		let navCatPath = path.resolve(cachePath, './article');
+				   		let navCatExist = fse.existsSync(navCatPath);
+				   		if(!navCatExist){
+				   			fse.mkdirSync(navCatPath);
+				   		}
+				   		let curNavFilePath = path.resolve(cachePath, `./article/${arg._id}.html`);
+				   		fse.writeFileSync(curNavFilePath, curNavRes.data.replace(/http:\/\/localhost:9999/gi, domain));
+				   		console.log(`/article/${arg._id}.html`);
+				   	}
+		   		}
+		   		res();
+		   	}).catch((err) => {
+		   		console.log('分类文件生成发生错误');
 		   	});
 	   	}
 

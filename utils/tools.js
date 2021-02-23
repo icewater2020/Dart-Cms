@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 const fse = require('fs-extra');
 const uuidv4 = require('uuid/v4');
 const { ObjectID } = require('mongodb');
@@ -156,6 +157,19 @@ function filterXSS(str) {
 	.replace(/\r{0,}\n/g, '<br/>')
 }
 
+// http简单包装
+function httpRequest(url){
+	return new Promise((resolve, reject) => {
+		axios.get(url)
+		.then(response => {
+			resolve(response)
+		})
+		.catch(err => {
+			resolve(undefined)
+		})
+	})
+}
+
 module.exports = {
 	getBjDate,
 	filterXSS,
@@ -168,4 +182,5 @@ module.exports = {
 	dateStringify,
 	dirCatImgs,
 	placeUploadImg,
+	httpRequest,
 }
