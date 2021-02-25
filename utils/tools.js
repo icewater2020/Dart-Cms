@@ -87,7 +87,7 @@ let mixinsScriptConfig = async (scriptName, mixins) => {
 		let confPath = path.resolve(__dirname, `../script/${scriptName}/config.json`);
 		let oldConf = fse.readJsonSync(confPath);
 		let newConf = Object.assign({}, oldConf, mixins);
-		fse.writeJsonSync(confPath, newConf);
+		fse.writeJsonSync(confPath, newConf, {spaces: '\t'});
 		return true
 	}catch(err){
 		return false
