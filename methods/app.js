@@ -123,11 +123,7 @@ let appInitTipsInfo = async (ctx, next) => {
 let getAllArtItemList = async (ctx, next) => {
 
 	ctx.set('Content-Type', 'application/json');
-	let confColl = getDB().collection('config');
 	let artInfoColl = getDB().collection('article_info');
-	let videoInfoColl = getDB().collection('video_info');
-	let otherColl = getDB().collection('other');
-	let config = await confColl.findOne({});
 
 	let { page=1 } = ctx.query;
 
@@ -136,29 +132,12 @@ let getAllArtItemList = async (ctx, next) => {
 	let limit = 10;
 
 	let promise = new Promise(async (resolve, reject) => {
-
-		let allArtNav = await otherColl.find({display: true, "type" : 'nav_type', nav_type: 'article'}).toArray();
-		// 是否有文章分类
-		if(allArtNav.length){
-			let queryIds = [];
-			for(let arg of allArtNav){
-				queryIds.push(arg._id);
-			}
-			let artResult = await artInfoColl.find({article_type: {$in: queryIds}, display: true}).sort({_id: -1}).skip((page - 1) * limit).limit(limit).toArray();
-			let total = await artInfoColl.find({article_type: {$in: queryIds}, display: true}).count();
-			return resolve({
-				list: artResult,
-				total: total,
-				page: page
-			})
-		}else{
-			return resolve({
-				list: [],
-				total: 0,
-				page: page
-			})
-		}
-
+		let cursor = artInfoColl.find({display: true});
+		return resolve({
+			list: await cursor.sort({_id: -1}).skip((page - 1) * limit).limit(limit).toArray(),
+			total: await cursor.count(),
+			page: page
+		})
 	})
 
 	await setResponse(ctx, promise)
