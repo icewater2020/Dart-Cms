@@ -409,6 +409,19 @@ client.then(async (db) => {
                     index: 5
                 },
                 {
+                    name: '泰国剧',
+                    parent_id: pid,
+                    display: true,
+                    nav_type: 'video',
+                    seo: {
+                        title: '免费在线观看,电视剧',
+                        keywords: '泰国剧',
+                        description: '泰国剧'
+                    },
+                    type: 'nav_type',
+                    index: 6
+                },
+                {
                     name: '海外剧',
                     parent_id: pid,
                     display: true,
@@ -419,7 +432,7 @@ client.then(async (db) => {
                         description: '海外剧'
                     },
                     type: 'nav_type',
-                    index: 6
+                    index: 7
                 },
             ]);
         });
@@ -640,18 +653,83 @@ client.then(async (db) => {
                     index: 0
                 },
                 {
-                    name: '新闻',
+                    name: '影视资讯',
                     parent_id: pid,
                     display: true,
                     nav_type: 'article',
                     seo: {
-                        title: '新闻影视资讯大全',
-                        keywords: '新闻',
-                        description: '新闻'
+                        title: '影视资讯大全',
+                        keywords: '影视资讯',
+                        description: '影视资讯'
                     },
                     type: 'nav_type',
                     index: 1
-                }
+                },
+                {
+                    name: '明星资讯',
+                    parent_id: pid,
+                    display: true,
+                    nav_type: 'article',
+                    seo: {
+                        title: '明星资讯大全',
+                        keywords: '明星资讯',
+                        description: '明星资讯'
+                    },
+                    type: 'nav_type',
+                    index: 2
+                },
+                {
+                    name: '体育资讯',
+                    parent_id: pid,
+                    display: true,
+                    nav_type: 'article',
+                    seo: {
+                        title: '体育资讯大全',
+                        keywords: '体育资讯',
+                        description: '体育资讯'
+                    },
+                    type: 'nav_type',
+                    index: 3
+                },
+                {
+                    name: '新闻资讯',
+                    parent_id: pid,
+                    display: true,
+                    nav_type: 'article',
+                    seo: {
+                        title: '新闻资讯大全',
+                        keywords: '新闻资讯',
+                        description: '新闻资讯'
+                    },
+                    type: 'nav_type',
+                    index: 4
+                },
+                {
+                    name: '财经资讯',
+                    parent_id: pid,
+                    display: true,
+                    nav_type: 'article',
+                    seo: {
+                        title: '财经资讯大全',
+                        keywords: '财经资讯',
+                        description: '财经资讯'
+                    },
+                    type: 'nav_type',
+                    index: 5
+                },
+                {
+                    name: '娱乐资讯',
+                    parent_id: pid,
+                    display: true,
+                    nav_type: 'article',
+                    seo: {
+                        title: '娱乐资讯大全',
+                        keywords: '娱乐资讯',
+                        description: '娱乐资讯'
+                    },
+                    type: 'nav_type',
+                    index: 6
+                },
             ]);
         });
         resolve();
