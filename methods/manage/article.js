@@ -17,11 +17,17 @@ let GetAllArticle = async (ctx, next) => {
 	await authToken(ctx, next, async () => {
 
 		let artColl = getDB().collection('article_info');
-		let { page=1, limit=10, search=false, sort={update_time: -1} } = ctx.request.body;    // query get
+		let { page=1, limit=10, search=false, type={}, sort={update_time: -1} } = ctx.request.body;    // query get
 
 		limit = limit > 100 ? 100 : limit;
 
-		let queryJson = (search && search.trim()) ? { articleTitle: { $regex: search, $options: "$i" } } : {};
+		// 处理下参数的_id
+		let type_id = type['article_type'];
+		if(type_id && typeof type_id === 'string' && type_id.length === 24){
+			type['article_type'] = new ObjectID(type_id);
+		}
+
+		let queryJson = (search && search.trim()) ? { articleTitle: { $regex: search, $options: "$i" }, ...type } : type;
 
 		let cursor = artColl.find(queryJson).sort(sort).skip((--page) * limit).limit(limit);
 

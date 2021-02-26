@@ -18,12 +18,18 @@ let GetVideoList = async (ctx, next) => {
 	await authToken(ctx, next, async () => {
 
 		let videoColl = getDB().collection('video_info');
-		let { page=1, limit=10, search=false, sort={update_time: -1} } = ctx.request.body;    // query get
+		let { page=1, limit=10, search=false, type={}, sort={update_time: -1} } = ctx.request.body;    // query get
+
+		// 处理下参数的_id
+		let type_id = type['video_type'];
+		if(type_id && typeof type_id === 'string' && type_id.length === 24){
+			type['video_type'] = new ObjectID(type_id);
+		}
 
 		limit = limit > 100 ? 100 : limit;
 
 		let promise = (async () => {
-			let queryJson = (search && search.trim()) ? { videoTitle: { $regex: search, $options: "$i" } } : {};
+			let queryJson = (search && search.trim()) ? { videoTitle: { $regex: search, $options: "$i" }, ...type } : type;
 			// let cursor = videoColl.find(queryJson);
 			var cursor = videoColl.aggregate([
 				{
