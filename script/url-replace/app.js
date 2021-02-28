@@ -83,10 +83,11 @@ let mainFn = async (DB) => {
 	return new Promise(async (resolve, reject) => {
 
 		let Sconfig = runConf;
+	   	let timeout = Sconfig.timeout * 60000;
 	   	// 最大采集时间
 	   	setTimeout(() => {
 	   		reject();
-	   	}, Sconfig.timeout);
+	   	}, timeout);
 	   	// 正常
 	   	let videoInfoColl = DB.collection('video_info');
 	   	let videoListColl = DB.collection('video_list');

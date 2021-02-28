@@ -15,11 +15,11 @@ async function http(url){
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			resolve(undefined)
-		}, 50000);
+		}, 15000);
 		axios({
 			method: 'GET',
 			url: url,
-			timeout: 50000,
+			timeout: 15000,
 		})
 		.then(res => {
 			if(res && res.status === 200){
@@ -49,10 +49,12 @@ let mainFn = async (DB) => {
 	return new Promise(async (resolve, reject) => {
 
 		let Sconfig = runConf;
+
+	   	let timeout = Sconfig.timeout * 60000;
 	   	// 最大采集时间
 	   	setTimeout(() => {
 	   		reject();
-	   	}, Sconfig.timeout);
+	   	}, timeout);
 	   	// 正常
 	   	let videoInfoColl = DB.collection('video_info');
 	   	let otherColl = DB.collection('other');

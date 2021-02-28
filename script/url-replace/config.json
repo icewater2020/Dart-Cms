@@ -4,7 +4,7 @@
     "note":"官方插件，用于url替换（播放源，视频封面）。",
     "alias":"url-replace",
     "state":false,
-    "timeout":7200000,
+    "timeout":180,
     "pid":0,
     "runTime":"",
     "options":{

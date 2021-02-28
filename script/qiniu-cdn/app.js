@@ -108,11 +108,11 @@ let mainFn = async (DB) => {
 	// 箭头函数 与 promise = 狗币
 	return new Promise(async (resolve, reject) => {
 
-		let Sconfig = runConf;
+		let timeout = runConf.timeout * 60000;
 	   	// 最大采集时间
 	   	setTimeout(() => {
 	   		reject();
-	   	}, Sconfig.timeout);
+	   	}, timeout);
 	   	// 正常
 	   	let videoInfoColl = DB.collection('video_info');
 	   	let confColl = DB.collection('config');

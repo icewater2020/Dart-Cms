@@ -4,7 +4,7 @@
     "note":"官方插件，用于生成CMS各种静态页面，加快网站访问速度。",
     "alias":"static",
     "state":false,
-    "timeout":7200000,
+    "timeout":180,
     "pid":0,
     "runTime":"",
     "options":{

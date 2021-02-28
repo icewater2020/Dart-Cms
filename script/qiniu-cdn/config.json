@@ -4,7 +4,7 @@
     "note":"官方插件，用于将封面图片上传至七牛CDN，加快网站访问速度。",
     "alias":"qiniu-cdn",
     "state":false,
-    "timeout":7200000,
+    "timeout":180,
     "pid":0,
     "runTime":"",
     "options":{
