@@ -1,49 +1,49 @@
 {
-    "file":"app.js",
-    "name":"静态资源生成插件",
-    "note":"官方插件，用于生成CMS各种静态页面，加快网站访问速度。",
-    "alias":"static",
-    "state":false,
-    "timeout":180,
-    "pid":0,
-    "runTime":"",
-    "options":{
-        "home":{
-            "key":"静态首页",
-            "type":"boolean",
-            "val":true
-        },
-        "video-type":{
-            "key":"视频导航",
-            "type":"boolean",
-            "val":true
-        },
-        "detill":{
-            "key":"视频详情",
-            "type":"boolean",
-            "val":false
-        },
-        "play":{
-            "key":"视频播放",
-            "type":"boolean",
-            "val":false
-        },
-        "article":{
-            "key":"文章详情",
-            "type":"boolean",
-            "val":false
-        },
-        "domain":{
-            "key":"输入域名",
-            "type":"string",
-            "val":"http://localhost:9999",
-            "note":"请输入完整地址，包括http|https，例如https://www.baidu.com"
-        },
-        "lens":{
-            "key":"实例长度",
-            "type":"number",
-            "val":50,
-            "note":"请输入每个分类下生成的视频静态页面个数"
-        }
-    }
+	"file": "app.js",
+	"name": "静态资源生成插件",
+	"note": "官方插件，用于生成CMS各种静态页面，加快网站访问速度。",
+	"alias": "static",
+	"state": false,
+	"timeout": 480,
+	"pid": 0,
+	"runTime": "",
+	"options": {
+		"home": {
+			"key": "静态首页",
+			"type": "boolean",
+			"val": true
+		},
+		"video-type": {
+			"key": "视频导航",
+			"type": "boolean",
+			"val": true
+		},
+		"detill": {
+			"key": "视频详情",
+			"type": "boolean",
+			"val": true
+		},
+		"play": {
+			"key": "视频播放",
+			"type": "boolean",
+			"val": true
+		},
+		"article": {
+			"key": "文章详情",
+			"type": "boolean",
+			"val": true
+		},
+		"domain": {
+			"key": "输入域名",
+			"type": "string",
+			"val": "http://localhost:9999",
+			"note": "请输入完整地址，包括http|https，例如https://www.baidu.com"
+		},
+		"lens": {
+			"key": "实例长度",
+			"type": "number",
+			"val": 10,
+			"note": "（0 =>> 全部）请输入每个分类下生成的视频静态页面个数"
+		}
+	}
 }

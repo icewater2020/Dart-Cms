@@ -1,45 +1,45 @@
 {
-    "file":"app.js",
-    "name":"封面图片上传七牛CDN插件",
-    "note":"官方插件，用于将封面图片上传至七牛CDN，加快网站访问速度。",
-    "alias":"qiniu-cdn",
-    "state":false,
-    "timeout":180,
-    "pid":0,
-    "runTime":"",
-    "options":{
-        "accessKey":{
-            "key":"AK",
-            "type":"string",
-            "val":""
+    "file": "app.js",
+    "name": "封面图片上传七牛CDN插件",
+    "note": "官方插件，用于将封面图片上传至七牛CDN，加快网站访问速度。",
+    "alias": "qiniu-cdn",
+    "state": false,
+    "timeout": 180,
+    "pid": 0,
+    "runTime": "",
+    "options": {
+        "accessKey": {
+            "key": "AK",
+            "type": "string",
+            "val": ""
         },
-        "secretKey":{
-            "key":"SK",
-            "type":"string",
-            "val":""
+        "secretKey": {
+            "key": "SK",
+            "type": "string",
+            "val": ""
         },
-        "bucket":{
-            "key":"空间名称",
-            "type":"string",
-            "val":""
+        "bucket": {
+            "key": "空间名称",
+            "type": "string",
+            "val": ""
         },
-        "zone":{
-            "key":"存储区域",
-            "type":"string",
-            "val":"z0",
-            "note":"存储区域代号，华东(z0),华北(z1),华南(z2),北美(na0),东南亚(as0)"
+        "zone": {
+            "key": "存储区域",
+            "type": "string",
+            "val": "z0",
+            "note": "存储区域代号，华东(z0),华北(z1),华南(z2),北美(na0),东南亚(as0)"
         },
-        "path":{
-            "key":"文件路径",
-            "type":"string",
-            "val":"upload/dart-cms/",
-            "note":"文件上传后的路径，注意不要以 “/” 开头，例：upload/dart-cms/"
+        "path": {
+            "key": "文件路径",
+            "type": "string",
+            "val": "upload/dart-cms/",
+            "note": "文件上传后的路径，注意不要以 “/” 开头，例：upload/dart-cms/"
         },
-        "link":{
-            "key":"访问网址",
-            "type":"string",
-            "val":"",
-            "note":"请输入完整url，包括https|http，例：https://www.xxx.com"
+        "link": {
+            "key": "访问网址",
+            "type": "string",
+            "val": "",
+            "note": "请输入完整url，包括https|http，例：https://www.xxx.com"
         }
     }
 }

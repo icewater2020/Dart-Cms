@@ -1,32 +1,32 @@
 {
-    "file":"app.js",
-    "name":"网址替换插件",
-    "note":"官方插件，用于url替换（播放源，视频封面）。",
-    "alias":"url-replace",
-    "state":false,
-    "timeout":180,
-    "pid":0,
-    "runTime":"",
-    "options":{
-        "oldUrl":{
-            "key":"旧地址",
-            "type":"string",
-            "val":""
+    "file": "app.js",
+    "name": "网址替换插件",
+    "note": "官方插件，用于url替换（播放源，视频封面）。",
+    "alias": "url-replace",
+    "state": false,
+    "timeout": 180,
+    "pid": 0,
+    "runTime": "",
+    "options": {
+        "oldUrl": {
+            "key": "旧地址",
+            "type": "string",
+            "val": ""
         },
-        "newUrl":{
-            "key":"新地址",
-            "type":"string",
-            "val":""
+        "newUrl": {
+            "key": "新地址",
+            "type": "string",
+            "val": ""
         },
-        "picImg":{
-            "key":"视频封面",
-            "type":"boolean",
-            "val":false
+        "picImg": {
+            "key": "视频封面",
+            "type": "boolean",
+            "val": false
         },
-        "playUrl":{
-            "key":"视频源",
-            "type":"boolean",
-            "val":true
+        "playUrl": {
+            "key": "视频源",
+            "type": "boolean",
+            "val": true
         }
     }
 }

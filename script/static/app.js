@@ -57,6 +57,7 @@ let mainFn = async (DB) => {
 	   	}, timeout);
 	   	// 正常
 	   	let videoInfoColl = DB.collection('video_info');
+	   	let articleInfoColl = DB.collection('article_info');
 	   	let otherColl = DB.collection('other');
 	   	let confColl = DB.collection('config');
 
@@ -70,7 +71,7 @@ let mainFn = async (DB) => {
 		});
 		// 读取域配置
 		let domain = Sconfig.options.domain.val;
-
+   		let lens = Sconfig.options.lens.val;
 		// 开始采集 => 配置中保存当前子进程的pid，用于手动停止
 	   	// 开始采集 => 保存当前运行脚本时间
 	   	// 开始采集 => 脚本状态设置为已启动
@@ -114,10 +115,10 @@ let mainFn = async (DB) => {
 	   	// 所有的视频详情页
 	   	if(Sconfig.options["detill"].val){
 		   	await new Promise(async (res, rej) => {
-		   		let lens = Sconfig.options.lens.val;
 		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'video', display: true}).toArray();
 		   		for(let arg of allTopNavList){
-		   			let allVideoList = await videoInfoColl.find({display: true, video_type: arg._id}).sort({rel_time: -1, video_rate: -1, update_time: -1}).limit(lens).toArray();
+		   			let curNavs = videoInfoColl.find({display: true, video_type: arg._id}).sort({rel_time: -1, video_rate: -1, update_time: -1});
+			   		let allVideoList = lens ? await curNavs.limit(lens).toArray() : await curNavs.toArray();
 			   		for(let arg2 of allVideoList){
 				   		let curDetillVideoRes = await http(`${domain}/detill/${arg2._id}.html`);
 					   	if(curDetillVideoRes){
@@ -140,10 +141,10 @@ let mainFn = async (DB) => {
 	   	// 所有的视频播放页
 	   	if(Sconfig.options["play"].val){
 		   	await new Promise(async (res, rej) => {
-		   		let lens = Sconfig.options.lens.val;
 		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'video', display: true}).toArray();
 		   		for(let arg of allTopNavList){
-			   		let allVideoList = await videoInfoColl.find({display: true, video_type: arg._id}).sort({rel_time: -1, video_rate: -1, update_time: -1}).limit(lens).toArray();
+		   			let curNavs = videoInfoColl.find({display: true, video_type: arg._id}).sort({rel_time: -1, video_rate: -1, update_time: -1});
+			   		let allVideoList = lens ? await curNavs.limit(lens).toArray() : await curNavs.toArray();
 			   		for(let arg2 of allVideoList){
 				   		let curPlayVideoRes = await http(`${domain}/play/${arg2._id}.html`);
 					   	if(curPlayVideoRes){
@@ -166,19 +167,23 @@ let mainFn = async (DB) => {
 	   	// 所有的文章内容
 	   	if(Sconfig.options["article"].val){
 		   	await new Promise(async (res, rej) => {
-		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'article', parent_id: false, display: true}).toArray();
+		   		let allTopNavList = await otherColl.find({type: 'nav_type', nav_type: 'article', display: true}).toArray();
 		   		for(let arg of allTopNavList){
-			   		let curNavRes = await http(`${domain}/article/${arg._id}.html`);
-				   	if(curNavRes){
-				   		let navCatPath = path.resolve(cachePath, './article');
-				   		let navCatExist = fse.existsSync(navCatPath);
-				   		if(!navCatExist){
-				   			fse.mkdirSync(navCatPath);
-				   		}
-				   		let curNavFilePath = path.resolve(cachePath, `./article/${arg._id}.html`);
-				   		fse.writeFileSync(curNavFilePath, curNavRes.data.replace(/http:\/\/localhost:9999/gi, domain));
-				   		console.log(`/article/${arg._id}.html`);
-				   	}
+		   			let curNavs = articleInfoColl.find({display: true, article_type: arg._id}).sort({update_time: -1});
+			   		let allArticleList = lens ? await curNavs.limit(lens).toArray() : await curNavs.toArray();
+			   		for(let arg2 of allArticleList){
+				   		let curNavRes = await http(`${domain}/article/${arg2._id}.html`);
+					   	if(curNavRes){
+					   		let navCatPath = path.resolve(cachePath, './article');
+					   		let navCatExist = fse.existsSync(navCatPath);
+					   		if(!navCatExist){
+					   			fse.mkdirSync(navCatPath);
+					   		}
+					   		let curNavFilePath = path.resolve(cachePath, `./article/${arg2._id}.html`);
+					   		fse.writeFileSync(curNavFilePath, curNavRes.data.replace(/http:\/\/localhost:9999/gi, domain));
+					   		console.log(`/article/${arg2._id}.html`);
+					   	}
+			   		}
 		   		}
 		   		res();
 		   	}).catch((err) => {
