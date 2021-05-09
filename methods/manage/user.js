@@ -92,9 +92,9 @@ let RemoveUser = async (ctx, next) => {
 		let memColl = getDB().collection('user');
 		let { list=[] } = ctx.request.body;         // body post
 		let arrID = makeArrObjectID(list);
+		let sessUser = ctx.session2.user;
 
-
-		let promise = memColl.deleteMany({_id: {$in: arrID, $nin: [ctx.session2.user._id]}, grade_id: 0});
+		let promise = memColl.deleteMany({_id: {$in: arrID, $nin: [sessUser._id]}, grade_id: sessUser.grade_id -1});
 		await setResponse(ctx, promise, {
 			error: '用户删除失败',
 			success: '用户删除成功'

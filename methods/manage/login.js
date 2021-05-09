@@ -121,7 +121,7 @@ let AdminLogin = async (ctx, next) => {
 		message = { error: "您已登录，无需再次登录" }
 	}else{
 		// 存在 && 等于
-		if(ctx.session2.code && code && code === ctx.session2.code){
+		if(ctx.session2.code && code && code.toLocaleLowerCase() === ctx.session2.code){
 			let memColl = getDB().collection('user');
 			// console.log({userName, passWord: encryption(passWord), admin: true});
 			let isExist = await memColl.findOne({userName, passWord: encryption(passWord), admin: true, display: true});
@@ -137,6 +137,7 @@ let AdminLogin = async (ctx, next) => {
 					nickName: isExist.nickName,
 					curTime: config.isBjTime ? getBjDate(new Date().getTime()) : new Date().getTime(),
 					admin: isExist.admin,
+					grade_id: isExist.grade_id,
 					roleData: isExist.roleData
 				}
 				// session存
